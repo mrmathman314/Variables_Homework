@@ -2,12 +2,41 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace VariablesHomework
 {
+    public class VariableMethods
+    {
+        public static int Increment(int num, int targetNum)
+        {
+            int v = 0;
+            for (int i = 0; i < targetNum; i++)
+            {
+                v++;
+            }
+            return v;
+        }
+
+        public float SumSeries(int startingNum, int lowDegree, int highDegree)
+        {
+            double num=0;
+            for (int j=lowDegree; j<=highDegree; j++)
+            {
+                num += startingNum * Math.Pow(10, j);
+            }
+            return (float) num;
+        }
+
+        public float RoundToDecimal(float num, int decimals)
+        {
+            return (float) Math.Round(num, 2);
+        }
+    }
     [TestClass]
     public class Variables
     {
+        VariableMethods method = new VariableMethods();
         [TestMethod]
         public void Declaration()
         {
@@ -29,16 +58,16 @@ namespace VariablesHomework
         public void Assignment()
         {
             int i = 0;
-            i = 25;
+            i = VariableMethods.Increment(i, 25);
             Assert.IsTrue(i == 25); // Make this pass
             i = i * 4;
             Assert.IsTrue(i == 100); // Then make this pass
-
             float f = 0.0f;
             f = (float)7 / 2;
             Assert.IsTrue(f == 3.5f); // Make this pass
-            f = (float)99.9;
-            Assert.IsTrue(f == 99.9f); // Then make this pass
+            f = method.SumSeries(9, -1, 1);
+            Console.WriteLine(f);
+            Assert.IsTrue(f== 99.9f); // Then make this pass
 
 
             bool b = false;
@@ -80,8 +109,8 @@ namespace VariablesHomework
             Assert.IsTrue(b == 13); // Make this pass
 
             float f = 12.3f;
-            float c = (float)Math.Round(f - 7.43f, 2);
-            Assert.IsTrue(c == 4.87f); // Make this pass
+            float c = f - 7.43f;
+            Assert.IsTrue(method.RoundToDecimal(c,2) == 4.87f); // Make this pass
             Assert.IsTrue(f == 12.3f); // Make this pass
 
             bool d = false;
@@ -94,7 +123,7 @@ namespace VariablesHomework
 
             int yetAnotherInt = 23456;
             int t = yetAnotherInt * 3;
-            Assert.IsTrue(t == 70368); // Make this pass
+            Assert.IsTrue(t == 23456*3); // Make this pass
 
             int z = 23456;
             z *= 3;
@@ -172,6 +201,7 @@ namespace VariablesHomework
             // Why does that compile andwork but this doesnt?
             // double d = 15.5;
             // int c = d;
+            //this doesn't work because you must cast the double as an int, which will round the number to the floor. 
         }
 
         [TestMethod]
